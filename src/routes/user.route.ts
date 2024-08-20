@@ -19,23 +19,6 @@ class UserRoutes {
     this.router.post('/admin', this.UserValidator.registrationAdmin, this.UserController.newUser);  // registration admin
 
     this.router.post('/login', this.UserController.getUser); // login
-    
-    //// Admin routes
-
-    // this.router.get('', this.UserController.getAllUsers);
-
-    // this.router.post(
-    //   '',
-    //   this.UserController.newUser
-    // );
-
-    //// User routes
-
-    // this.router.get('/:id', userAuth, this.UserController.getUser);
-
-    // this.router.put('/:id', this.UserController.updateUser);
-
-    // this.router.delete('/:id', this.UserController.deleteUser);
   };
 
   public getRoutes = (): IRouter => {

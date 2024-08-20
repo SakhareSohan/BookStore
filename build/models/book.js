@@ -1,26 +1,15 @@
 'use strict';
-import { Model } from 'sequelize';
-import { IBOOK } from '../interfaces/book.interface';
-
-export default (sequelize, DataTypes) => {
-  class Book extends Model<IBOOK> implements IBOOK {
-    public description;
-    public discountPrice;
-    public bookImage;
-    public admin_user_id;
-    public bookName;
-    public author;
-    public quantity;
-    public price;
-   
-    static associate(models) {
-        Book.belongsTo(models.Users, {
-            foreignKey: 'admin_user_id',
-    })
+Object.defineProperty(exports, "__esModule", { value: true });
+const sequelize_1 = require("sequelize");
+exports.default = (sequelize, DataTypes) => {
+    class Book extends sequelize_1.Model {
+        static associate(models) {
+            Book.belongsTo(models.Users, {
+                foreignKey: 'admin_user_id',
+            });
+        }
     }
-  }
-  Book.init(
-    {
+    Book.init({
         description: {
             type: DataTypes.STRING,
             allowNull: true,
@@ -57,11 +46,9 @@ export default (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-    },
-    {
-      sequelize,
-      modelName: 'book'
-    }
-  );
-  return Book;
+    }, {
+        sequelize,
+        modelName: 'book'
+    });
+    return Book;
 };

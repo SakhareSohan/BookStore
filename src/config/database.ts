@@ -44,6 +44,6 @@ sequelize
     logger.error('Could not connect to the database.', error);
   });
 
-sequelize.sync({force: true});
+sequelize.sync();
 
 export default sequelize;

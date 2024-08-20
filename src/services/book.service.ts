@@ -13,33 +13,57 @@ class BookService {
 
   //create a new user
   public getBookAdmin = async (id) => {
-    const data = await this.Book.findAll(id);
+    const data = await this.Book.findOne( {
+      where: { admin_user_id: id }
+    });
     return data;
   };
 
   //update a user
-  public getBookId = async (id, body) => {
-    await this.Book.update(body, {
+  public getBookId = async (id) => {
+    const data = await this.Book.findOne( {
       where: { id: id }
     });
-    return body;
+    return data;
   };
 
   //delete a user
-  public createBook = async (id) => {
-    await this.Book.destroy({ where: { id: id } });
-    return '';
+  public createBook = async (body) => {
+    const obj = {
+      "description": body.description,
+      "discountPrice": body.discountPrice,
+      "bookImage": " ",
+      "admin_user_id": body.userId,
+      "bookName": body.bookName,
+      "author": body.author, 
+      "quantity":body.quantity,
+      "price": body.price
+    }
+    const data = await this.Book.create(obj);
+    return data;
   };
 
   //get a single user
-  public updateBook = async (id) => {
-    const data = await this.Book.findByPk(id);
+  public updateBook = async (id, body) => {
+    const obj = {
+      // "description": body.description,
+      // "bookImage": " ",
+      // "admin_user_id": body.userId,
+      // "bookName": body.bookName,
+      // "author": body.author, 
+      // "quantity":body.quantity,
+      "discountPrice": body.discount,
+      "price": body.price
+    }
+    const data = await this.Book.update(obj, {
+      where: { id : id }
+    });
     return data;
   };
 
   //get a single user
   public deleteBook = async (id) => {
-    const data = await this.Book.findByPk(id);
+    const data = await this.Book.destroy(id);
     return data;
   };
 }

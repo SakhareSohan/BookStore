@@ -1,11 +1,12 @@
 import express, { IRouter } from 'express';
 import bookController from '../controllers/book.controller';
-import userValidator from '../validators/user.validator';
-import { userAuth } from '../middlewares/auth.middleware';
+import adminVerify from '../validators/user.validator';
+import { adminAuth, userAuth } from '../middlewares/auth.middleware';
 
 class BookRoutes {
   private BookController = new bookController();
   private router = express.Router();
+  private admin = new adminVerify();
 
   constructor() {
     this.routes();
@@ -13,22 +14,21 @@ class BookRoutes {
 
   private routes = () => {
 
-    //// Admin routes
-    // req.body.userId = id;
-    // req.body.role = role;
     this.router.get('/', userAuth, this.BookController.getAllBook); // get all books
 
-    this.router.get('/:adminid', userAuth, this.BookController.getBookAdmin); // get books by admin id
+    this.router.get('/admin', adminAuth, this.BookController.getAllBook);
+
+    this.router.get('/:adminid', adminAuth, this.BookController.getBookAdmin); // get books by admin id // validation
 
     this.router.get('/:bookid', userAuth, this.BookController.getBookId); // get books by book id
 
-    this.router.post('/', userAuth, this.BookController.createBook); // create book
+    this.router.get('/admin/:bookid', adminAuth, this.BookController.getBookId); // get books by book id
 
-    this.router.post('/:bookid/update', userAuth, this.BookController.updateBook); // update book
+    this.router.post('/admin', adminAuth, this.admin.adminVerify, this.BookController.createBook); // create book // validator for admin role
 
-    this.router.delete('/:bookid/delete', userAuth, this.BookController.deleteBook)// delete book
+    this.router.post('/:bookid/update', adminAuth, this.BookController.updateBook); // update book // validation
 
-    //// User routes
+    this.router.delete('/:bookid/delete', adminAuth, this.BookController.deleteBook)// delete book // validation
 
   };
 

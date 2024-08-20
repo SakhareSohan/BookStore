@@ -1,0 +1,4 @@
+info: ::1 - - [20/Aug/2024:05:01:01 +0000] "POST /api/v1/users/login HTTP/1.1" 200 495 "-" "PostmanRuntime/7.41.1"
+
+info: ::1 - - [20/Aug/2024:05:01:24 +0000] "GET /api/v1/cart/ HTTP/1.1" 200 332 "-" "PostmanRuntime/7.41.1"
+

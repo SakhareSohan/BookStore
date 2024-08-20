@@ -1,5 +1,6 @@
 import Joi from '@hapi/joi';
 import { Request, Response, NextFunction } from 'express';
+import HttpStatus from 'http-status-codes';
 
 class UserValidator {
   public registration = (req: Request, res: Response, next: NextFunction): void =>{
@@ -31,6 +32,19 @@ class UserValidator {
       next(error);
     }
     next();
+  }
+
+  public adminVerify = (req: Request, res: Response, next: NextFunction): void => {
+    if (req.body.role === "admin") {
+      next();
+    } else {
+      res.status(HttpStatus.OK).json({
+        code: HttpStatus.OK,
+        data: "user Not Authorised to Perform this action",
+        message: 'Please Login with Valid Credentials'
+      });
+    }
+    
   }
   
 }
